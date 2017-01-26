@@ -20,7 +20,7 @@ var matrix = [
 // 20 |21 |22
 
 // Create our display board
-var board = ' 1 | 2 | 3\n--- --- ---\n 4 | 5 | 6\n--- --- ---\n 7 | 8 | 9 ';
+var board = ' ' + matrix[0][0] + ' | ' + matrix[0][1] + ' | ' + matrix[0][2] + '\n--- --- ---\n ' + matrix[1][0] + ' | ' + matrix[1][1] + ' | ' + matrix[1][2] + '\n--- --- ---\n ' + matrix[2][0] + ' | ' + matrix[2][1] ' | ' + matrix[2][2] + ' ';
 
 // Move prompt
 var move = prompt("Make a move", "1-9");
