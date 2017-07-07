@@ -1,68 +1,102 @@
-// Board diagram
-//  1 | 2 | 3
-// --- --- ---
-//  4 | 5 | 6
-// --- --- ---
-//  7 | 8 | 9
+var playCount = 0;
 
-// Create our actual board
-var matrix = [
-[1,2,3],
-[4,5,6],
-[7,8,9]
-]
+var wins = {}
 
-// Positions
-// 00 |01 |02
-// --- --- ---
-// 10 |11 |12
-// --- --- ---
-// 20 |21 |22
-
-// Create our display board
-var board = ' ' + matrix[0][0] + ' | ' + matrix[0][1] + ' | ' + matrix[0][2] + '\n--- --- ---\n ' + matrix[1][0] + ' | ' + matrix[1][1] + ' | ' + matrix[1][2] + '\n--- --- ---\n ' + matrix[2][0] + ' | ' + matrix[2][1] + ' | ' + matrix[2][2] + ' ';
-
-// Show board
-console.log(board);
-
-// Move prompt
-var move = prompt("Make a move", "1-9");
-
-var turn = 0;
-
-// if (!place[move]) {
-//   console.log('That is not a valid move. Please enter a number 1-9');
-// } else if (place[move] === 'X' || place[move] === 'O') {
-//   console.log('That spot is taken. Please choose a different move');
-// } else {
-//   if (turn % 2 === 0) {
-//     place[move] = 'X';
-//     turn++;
-//   } else {
-//     place[move] = 'O';
-//     turn++;
-//   }
-// }
-
-// // Show updated board
-// console.log(board);
-
-// Search for winners
-for (var i = 0; i < matrix.length; i++) {
-  for (var j = 0; j < matrix[i].length; j++) {
-    if (move == matrix[i][j]) {
-      if (turn % 2 === 0) {
-        matrix[i][j] = 'X';
-        turn++;
-      } else {
-        matrix[i][j] = 'O';
-        turn++;
-      }
-    } else {
-      console.log('That is not a valid move. Please choose again');
-    }
+// On click event for plays
+$(".tile").click(function() {
+  if (playCount % 2 === 0) {
+    $(this).html("X");
+    wins[this.id] = "X";
+  } else {
+    $(this).html("O");
+    wins[this.id] = "O";
   }
-}
+  playCount++;
+  // Event for when game is over
+  if (playCount === 9) {
+    $(".tile").fadeOut();
+    $("#5").html("Game over. Thanks for playing.");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[1] && wins[1] === wins[2] && wins[2] === wins[3]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[1] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[4] && wins[4] === wins[5] && wins[5] === wins[6]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[4] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[7] && wins[7] === wins[8] && wins[8] === wins[9]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[7] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[1] && wins[1] === wins[4] && wins[4] === wins[7]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[1] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[2] && wins[2] === wins[5] && wins[5] === wins[8]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[2] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[3] && wins[3] === wins[6] && wins[6] === wins[9]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[1] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[1] && wins[1] === wins[5] && wins[5] === wins[9]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[1] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+
+  if (!!wins[7] && wins[7] === wins[5] && wins[5] === wins[3]) {
+    $(".tile").fadeOut();
+    $("#5").html("Team " + wins[7] + " wins!");
+    $("#5").css("border-right", "0px");
+    $("#5").css("border-bottom", "0px");
+    $("#5").fadeIn();
+  }
+});
+
+// Reset game on click event
+$("#reset").click(function() {
+  playCount = 0;
+  wins = {};
+  $(".tile").html("");
+  $("#5").css("border-right", "1px solid black");
+  $("#5").css("border-bottom", "1px solid black");
+  $(".tile").fadeIn();
+});
+
+
 
 
 
