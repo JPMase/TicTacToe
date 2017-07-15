@@ -1,17 +1,119 @@
+// Variable for count of plays
 var playCount = 0;
 
-var wins = {}
+// var wins = {};
+
+// Arrays for x and o respective plays
+var xPlays = [];
+var oPlays = [];
+
+// Function to determine horizontal tic tac toe
+function isHorizontal(arr, start, count) {
+  if (count === 3) {
+    return true;
+  }
+  var sorted = arr.sort(function(a, b) {
+    return a - b;
+  });
+  for (var i = 0; i < sorted.length; i++) {
+    var play = sorted[i];
+    if (play ===  start + 1) {
+      return isHorizontal(sorted, play, count + 1);
+    }
+  }
+  return false;
+}
+
+// Function to determine vertical tic tac toe
+function isVertical(arr, start, count) {
+  if (count === 3) {
+    return true;
+  }
+  var sorted = arr.sort(function(a, b) {
+    return a - b;
+  });
+  for (var i = 0; i < sorted.length; i++) {
+    var play = sorted[i];
+    if (play === start + 3) {
+      return isVertical(sorted, play, count + 1);
+    }
+  }
+  return false;
+}
+
+// Function to determine diagonal right tic tac toe
+function isDiagRight(arr, start, count) {
+  if (count === 3) {
+    return true;
+  }
+  var sorted = arr.sort(function(a, b) {
+    return a - b;
+  });
+  for (var i = 0; i < sorted.length; i++) {
+    var play = sorted[i];
+    if (play === start + 4) {
+      return isDiagRight(sorted, play, count + 1);
+    }
+  }
+  return false;
+}
+
+// Function to determine diagonal left tic tac toe
+function isDiagLeft(arr, start, count) {
+  if (count === 3) {
+    return true;
+  }
+  var sorted = arr.sort(function(a, b) {
+    return a - b;
+  });
+  for (var i = 0; i < sorted.length; i++) {
+    var play = sorted[i];
+    if (play === start + 2) {
+      return isDiagLeft(sorted, play, count + 1);
+    }
+  }
+  return false;
+}
 
 // On click event for plays
 $(".tile").click(function() {
   if (playCount % 2 === 0) {
     $(this).html("X");
-    wins[this.id] = "X";
+    // wins[this.id] = "X";
+    xPlays.push(Number(this.id));
+    playCount++;
+    // Check for tic tac toe
+    if (playCount > 4) {
+      for (var i = 0; i < xPlays.length; i++) {
+        if (isHorizontal(xPlays, xPlays[i], 1) || isVertical(xPlays, xPlays[i], 1) || isDiagLeft(xPlays, xPlays[i], 1) || isDiagRight(xPlays, xPlays[i], 1)) {
+          // Team X wins animation
+          $(".tile").fadeOut();
+          $("#5").html("Team X wins!");
+          $("#5").css("border-right", "0px");
+          $("#5").css("border-bottom", "0px");
+          $("#5").fadeIn();
+        }
+      }
+    }
   } else {
     $(this).html("O");
-    wins[this.id] = "O";
+    // wins[this.id] = "O";
+    oPlays.push(Number(this.id));
+    playCount++;
+    // Check for tic tac toe
+    if (playCount > 4) {
+      for (var i = 0; i < oPlays.length; i++) {
+        if (isHorizontal(oPlays, oPlays[i], 1) || isVertical(oPlays, oPlays[i], 1) || isDiagLeft(oPlays, oPlays[i], 1) || isDiagRight(oPlays, oPlays[i], 1)) {
+          // Team O wins animation
+          $(".tile").fadeOut();
+          $("#5").html("Team O wins!");
+          $("#5").css("border-right", "0px");
+          $("#5").css("border-bottom", "0px");
+          $("#5").fadeIn();
+        }
+      }
+    }
   }
-  playCount++;
   // Event for when game is over
   if (playCount === 9) {
     $(".tile").fadeOut();
@@ -21,69 +123,6 @@ $(".tile").click(function() {
     $("#5").fadeIn();
   }
 
-  if (!!wins[1] && wins[1] === wins[2] && wins[2] === wins[3]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[1] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[4] && wins[4] === wins[5] && wins[5] === wins[6]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[4] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[7] && wins[7] === wins[8] && wins[8] === wins[9]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[7] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[1] && wins[1] === wins[4] && wins[4] === wins[7]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[1] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[2] && wins[2] === wins[5] && wins[5] === wins[8]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[2] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[3] && wins[3] === wins[6] && wins[6] === wins[9]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[1] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[1] && wins[1] === wins[5] && wins[5] === wins[9]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[1] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
-
-  if (!!wins[7] && wins[7] === wins[5] && wins[5] === wins[3]) {
-    $(".tile").fadeOut();
-    $("#5").html("Team " + wins[7] + " wins!");
-    $("#5").css("border-right", "0px");
-    $("#5").css("border-bottom", "0px");
-    $("#5").fadeIn();
-  }
 });
 
 // Reset game on click event
