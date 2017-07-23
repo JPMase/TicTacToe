@@ -5,7 +5,7 @@
   margin-right: auto;
 }
 
-.row {
+.highest, .middle, .lowest {
   height: 100px;
   width: 300px;
 }

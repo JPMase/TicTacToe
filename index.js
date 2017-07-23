@@ -1,11 +1,32 @@
 // Variable for count of plays
 var playCount = 0;
 
-// var wins = {};
-
 // Arrays for x and o respective plays
 var xPlays = [];
 var oPlays = [];
+
+// For loop that creates board
+for (var i = 1; i <= 9; i++) {
+  if (i <= 3) {
+    if (i % 3 === 0) {
+      console.log(i);
+      $(".highest").append("<div class='bottom tile' id='placeholder'></div>");
+    } else {
+      $(".highest").append("<div class='top tile' id='placeholder'></div>")
+    }
+  } else if (i <= 6) {
+    if (i % 3 === 0) {
+      $(".middle").append("<div class='bottom tile' id='placeholder'></div>");
+    } else {
+      $(".middle").append("<div class='top tile' id='placeholder'></div>");
+    }
+  } else if (i < 9) {
+      $(".lowest").append("<div class='right tile' id='placeholder'></div>");
+  } else {
+      $(".lowest").append("<div class='tile' id='placeholder'></div>");
+  }
+  document.getElementById("placeholder").setAttribute("id", i);
+}
 
 // Function to determine horizontal tic tac toe
 function isHorizontal(arr, start, count) {
